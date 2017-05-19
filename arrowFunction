@@ -1,0 +1,77 @@
+### 箭头函数
+- 箭头函数的产生：更简洁的语法和父作用域共享关键字this
+- 标识名 => 表达式 省却了function和return
+```
+let f = v => v;
+```
+等同于
+
+```
+let f = function(v) {
+    return v;
+};
+```
+
+### 箭头函数的几种写法
+```
+let f = () => 5;
+let g = (a, b) => a + b;
+let h = (a, b) => {
+    let sum = a + b;
+    return sum;
+}
+//由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象必须在外面加括号
+let j = id => ({id: id, name: 'hehe'});
+//箭头函数和变量解构结合
+const k = ({x, y}) => x + ' ' + y;
+```
+等同于
+
+```
+let f = function() { return 5;};
+let g = function(a, b) { return a + b;};
+let h = function(a, b) {
+    let sum = a + b;
+    return sum;
+}
+function k(person) {
+    return person.x + ' ' + person.y;
+}
+```
+### 列出箭头函数的一些例子写法
+
+```
+[1, 2, 3].map(x => x * x);
+//和rest结合
+const numbers = (...nums) => nums;
+console.log(numbers(1, 2, 3));//[1, 2, 3]
+```
+### 使用注意的点
+- this 就时定义时所在的对象，而不是使用时所在的对象
+- 不可以当做构造函数
+- 不可以使用arguments
+- 不可以使用yeild命令
+- 箭头函数没有自己的this 所以不能使用bind() call() apply()去改变this指向
+### 箭头函数可以嵌套
+
+```
+function insert(value) {
+    return {into: function(array) {
+        return {after: function(afterValue) {
+            array.splice(array.indexOf(afterValue) + 1, 0, value);
+            return array;
+        }};    
+    }};
+}
+insert(2).into([1, 3]).after(1);//[1, 2, 3]
+```
+等同于
+
+```
+let insert = (value) => ({into: (array) => ({after: (afterValue) => {
+    array.splice(array.indexOf(afterValue) + 1, 0, value);
+    return array;
+}})})
+```
+
+
